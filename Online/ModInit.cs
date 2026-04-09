@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Online.SQL;
+using Shared;
 using Shared.Models.AppConf;
 using Shared.Models.Events;
 using Shared.Models.Module;
 using Shared.Models.Module.Interfaces;
-using Shared.Models.Online.Settings;
+using Shared.Services;
+using System.Collections.Generic;
 
 namespace Online
 {
@@ -12,7 +14,6 @@ namespace Online
     {
         public static string modpath;
         public static ModuleConf conf;
-        public static PidTorSettings PidTor;
 
         public void Configure(ConfigureModel app)
         {
@@ -58,15 +59,6 @@ namespace Online
                     new("^/lite/", new WafLimitMap { limit = 10, second = 1 }),
                     new("^/(externalids|lifeevents)", new WafLimitMap { limit = 10, second = 1 })
                 }
-            });
-
-            PidTor = ModuleInvoke.Init("PidTor", new PidTorSettings()
-            {
-                enable = true,
-                displayindex = 551,
-                min_sid = 15,
-                emptyVoice = true,
-                redapi = "http://jac.red"
             });
         }
     }

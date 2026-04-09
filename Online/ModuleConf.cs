@@ -1,4 +1,5 @@
 ﻿using Shared.Models.AppConf;
+using System.Collections.Generic;
 
 namespace Online
 {

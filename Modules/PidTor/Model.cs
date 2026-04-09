@@ -1,4 +1,6 @@
-namespace Online.Models.PiTor
+using System;
+
+namespace PidTor
 {
     public class Torrent
     {

@@ -7,6 +7,6 @@ global using System.Linq;
 global using Shared;
 global using Shared.Models.Base;
 global using Shared.Services;
-global using SISI.Config;
+global using SISI.Models;
 global using Shared.Models.SISI.Base;
 global using Shared.Services.Utilities;

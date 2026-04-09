@@ -1,4 +1,4 @@
-﻿namespace SISI.Config
+﻿namespace SISI.Models
 {
     public class HistoryConf
     {

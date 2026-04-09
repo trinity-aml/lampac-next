@@ -10,8 +10,19 @@ using Shared.Models.Module.Entrys;
 using Online.SQL;
 using System.Data;
 using System.Text;
+using System.Linq;
 using IO = System.IO;
 using Shared.Services.RxEnumerate;
+using Shared;
+using Shared.Services;
+using System.Text.RegularExpressions;
+using System;
+using System.Web;
+using System.Collections.Concurrent;
+using System.Threading.Tasks;
+using Shared.Models.Base;
+using System.Collections.Generic;
+using Shared.Services.Utilities;
 
 namespace Online.Controllers
 {
@@ -122,8 +133,6 @@ namespace Online.Controllers
         /// imdb_id, kinopoisk_id
         /// </summary>
         static ConcurrentDictionary<string, string> externalids = null;
-
-        static DateTime externalids_lastWriteTime = default, externalids_nextCheck = default;
 
         [HttpGet]
         [Route("externalids")]
@@ -727,27 +736,6 @@ namespace Online.Controllers
             }
             #endregion
 
-            #region PidTor
-            if (ModInit.PidTor.enable)
-            {
-                if ((ModInit.PidTor.torrs != null && ModInit.PidTor.torrs.Length > 0) || (ModInit.PidTor.auth_torrs != null && ModInit.PidTor.auth_torrs.Count > 0))
-                {
-                    void psend()
-                    {
-                        if (ModInit.PidTor.group > 0 && ModInit.PidTor.group_hide)
-                        {
-                            if (user == null || ModInit.PidTor.group > user.group)
-                                return;
-                        }
-
-                        online.Add(($"{ModInit.PidTor.displayname ?? "PidŦor"}", "{localhost}/lite/pidtor", "pidtor", ModInit.PidTor.displayindex > 0 ? ModInit.PidTor.displayindex : online.Count));
-                    }
-
-                    psend();
-                }
-            }
-            #endregion
-
             #region checkOnlineSearch
             if (ModInit.conf.checkOnlineSearch && !string.IsNullOrEmpty(id))
             {
@@ -832,26 +820,18 @@ namespace Online.Controllers
 
                     if (quality == string.Empty)
                     {
-                        switch (balanser)
+                        if (EventListener.OnlineApiQuality != null)
                         {
-                            case "pidtor":
-                                quality = " ~ 2160p";
-                                break;
-                            default:
-                                if (EventListener.OnlineApiQuality != null)
+                            var em = new EventOnlineApiQuality(balanser, kitconf);
+                            foreach (Func<EventOnlineApiQuality, string> handler in EventListener.OnlineApiQuality.GetInvocationList())
+                            {
+                                string eventQuality = handler.Invoke(em);
+                                if (eventQuality != null)
                                 {
-                                    var em = new EventOnlineApiQuality(balanser, kitconf);
-                                    foreach (Func<EventOnlineApiQuality, string> handler in EventListener.OnlineApiQuality.GetInvocationList())
-                                    {
-                                        string eventQuality = handler.Invoke(em);
-                                        if (eventQuality != null)
-                                        {
-                                            quality = eventQuality;
-                                            break;
-                                        }
-                                    }
+                                    quality = eventQuality;
+                                    break;
                                 }
-                                break;
+                            }
                         }
 
                         if (balanser == "vokino")

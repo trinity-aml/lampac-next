@@ -1,13 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Online.Models.PiTor;
+using Shared;
 using Shared.Attributes;
+using Shared.Models.Base;
 using Shared.Models.Online.Settings;
-using System.Data;
+using Shared.Models.Templates;
+using Shared.Services;
+using Shared.Services.Utilities;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Web;
 
-namespace Online.Controllers
+namespace PidTor
 {
     public class PiTor : BaseOnlineController
     {
@@ -16,7 +26,7 @@ namespace Online.Controllers
         [Route("lite/pidtor")]
         async public Task<ActionResult> Index(string title, string original_title, int year, string original_language, int serial, int s = -1, bool rjson = false)
         {
-            var init = ModInit.PidTor;
+            var init = ModInit.conf;
             if (!init.enable)
                 return StatusCode(403);
 
@@ -341,7 +351,7 @@ namespace Online.Controllers
         [Route("lite/pidtor/serial/{id}")]
         async public Task<ActionResult> Serial(string id, string title, string original_title, int s)
         {
-            var init = ModInit.PidTor;
+            var init = ModInit.conf;
             if (!init.enable)
                 return StatusCode(403);
 
@@ -435,7 +445,7 @@ namespace Online.Controllers
         [Route("lite/pidtor/s{id}")]
         async public Task<ActionResult> Stream(string id, int tsid = -1)
         {
-            var init = ModInit.PidTor;
+            var init = ModInit.conf;
             if (!init.enable)
                 return StatusCode(403);
 
