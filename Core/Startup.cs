@@ -667,7 +667,7 @@ namespace Core
 
         void WatchersDynamicModule(IApplicationBuilder app, IMvcBuilder mvcBuilder, RootModule mod, string path)
         {
-            if (!mod.dynamic)
+            if (!mod.dynamic || !CoreInit.conf.DynamicModule)
                 return;
 
             path = Path.GetFullPath(path);

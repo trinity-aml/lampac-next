@@ -229,6 +229,8 @@ namespace Shared
 
         public string corsehost { get; set; } = "";
 
+        public bool DynamicModule { get; set; }
+
         public BaseModule BaseModule { get; set; } = new BaseModule()
         {
             nws = true,
