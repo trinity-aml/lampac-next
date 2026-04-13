@@ -338,7 +338,7 @@ namespace LampaWeb.Controllers
 
             if (ModInit.conf.initPlugins.watch_together)
                 plugins.Add(new("{localhost}/watchtogether.js", 1, "Watch Together", "lampac"));
-                
+
             if (ModInit.conf.initPlugins.catalog)
                 plugins.Add(new("{localhost}/catalog.js", 1, "Альтернативные источники каталога", "lampac"));
 
@@ -486,7 +486,7 @@ namespace LampaWeb.Controllers
 
             if (ModInit.conf.initPlugins.watch_together)
                 send("watchtogether", false);
-            
+
             if (adult && ModInit.conf.initPlugins.sisi)
             {
                 send("sisi", true);

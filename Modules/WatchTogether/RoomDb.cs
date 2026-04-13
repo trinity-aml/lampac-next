@@ -32,7 +32,7 @@ namespace WatchTogether
 
     public static class RoomDb
     {
-        public static readonly ConcurrentDictionary<string, RoomModel> Rooms = new();        
+        public static readonly ConcurrentDictionary<string, RoomModel> Rooms = new();
         public static readonly ConcurrentDictionary<string, RoomMemberModel> Members = new();
     }
 }

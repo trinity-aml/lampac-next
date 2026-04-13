@@ -82,7 +82,7 @@ namespace Xvideos
                     img = Regex.Replace(img, "/videos/thumbs([0-9]+)/", "/videos/thumbs$1lll/");
                     img = Regex.Replace(img, "THUMBNUM", "1", RegexOptions.IgnoreCase);
 
-                    string preview = Regex.Replace(img, "/thumbs[^/]+/", "/") ?? string.Empty;  
+                    string preview = Regex.Replace(img, "/thumbs[^/]+/", "/") ?? string.Empty;
                     preview = Regex.Replace(preview, "/[^/]+$", "/3/preview.mp4");
 
                     img = img.Replace("thumbs169l/", "thumbs169lll/").Replace("thumbs169ll/", "thumbs169lll/");

@@ -10,7 +10,7 @@ namespace WatchTogether
     {
         public static string modpath;
 
-        public void Configure(ConfigureModel app) {}
+        public void Configure(ConfigureModel app) { }
 
         public void Loaded(InitspaceModel baseconf)
         {

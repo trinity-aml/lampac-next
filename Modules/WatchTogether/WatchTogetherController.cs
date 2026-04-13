@@ -10,7 +10,7 @@ namespace WatchTogether
 {
     [Route("watchtogether")]
     public class WatchTogetherController : BaseController
-    {   
+    {
         [AllowAnonymous]
         [HttpGet]
         [Route("/watchtogether.js")]
@@ -22,7 +22,7 @@ namespace WatchTogether
                 rawJs = System.IO.File.ReadAllText(Path.Combine(ModInit.modpath, "plugin.js"));
                 memoryCache.Set(memKey, rawJs, TimeSpan.FromMinutes(10));
             }
-            
+
             string js = rawJs;
             js = js.Replace("{localhost}", this.host);
 
@@ -48,7 +48,7 @@ namespace WatchTogether
                 create_time = DateTime.UtcNow,
                 update_time = DateTime.UtcNow
             };
-            
+
             RoomDb.Rooms.TryAdd(id, room);
 
             return new JsonResult(new { id = id });
